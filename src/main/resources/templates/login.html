@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="apple-touch-icon" sizes="76x76" th:href="@{/img/favicon.png}">
+	<link rel="icon" type="image/png" th:href="@{/img/favicon.png}">
+	<title>APP | Login</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/normalize/normalize.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/fontawesome/all.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap/bootstrap5.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/preload/preload.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/alert/sweetalert2.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/login/login.css}">
+	<script type="text/javascript" th:src="@{/js/jquery/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/preload/preload.js}"></script>
+	<style type="text/css" th:inline="css">
+		/*[(${estilosLogin})]*/
+	</style>
+</head>
+
+<body>
+	<div id="preload">
+		<div id="mensajeCarga">
+			<span>Cargando, por favor espere...</span>
+		</div>
+		<div id="loader"></div>
+	</div>
+	<div class="container-body">
+		<div class="container mt-2">
+			<div class="header">
+				<h1 class="header-title text-center"><img th:src="@{/img/home.png}" class="img-fluid" alt="LOGO"></h1>
+				<p class="text text-center">Template App</p>
+				<div class="header-image">
+					<div class="header-image-particle header-image-particle-1"></div>
+					<div class="header-image-particle header-image-particle-2"></div>
+					<div class="header-image-particle header-image-particle-3"></div>
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+						<path
+							d="M622.3 271.1l-115.2-45c-4.1-1.6-12.6-3.7-22.2 0l-115.2 45c-10.7 4.2-17.7 14-17.7 24.9 0 111.6 68.7 188.8 132.9 213.9 9.6 3.7 18 1.6 22.2 0C558.4 489.9 640 420.5 640 296c0-10.9-7-20.7-17.7-24.9zM496 462.4V273.3l95.5 37.3c-5.6 87.1-60.9 135.4-95.5 151.8zM224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm96 40c0-2.5.8-4.8 1.1-7.2-2.5-.1-4.9-.8-7.5-.8h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c6.8 0 13.3-1.5 19.2-4-54-42.9-99.2-116.7-99.2-212z" />
+					</svg>
+				</div>
+			</div>
+			<form th:action="@{login}" method="POST">
+				<div class="form-floating mb-3">
+					<input type="text" class="form-control" name="username" id="username" placeholder="usuario"
+						required="required">
+					<label for="username">Usuario</label>
+				</div>
+				<div class="form-floating mb-3">
+					<input type="password" class="form-control" name="password" id="password" required="required"
+						placeholder="Contraseña">
+					<label for="password">Contraseña</label>
+				</div>
+				<button type="submit" class="button app-login-button">Accesar
+				</button>
+			</form>
+		</div>
+	</div>
+	<div class="separador"></div>
+	<footer>
+		<span class="version"><i class="fa-solid fa-code"></i> <span th:if="${projectV}"> <b th:text="${projectV}"></b>
+			</span></span>
+		<!--	<ul class="menu">
+			<li><a href="#">Login</a></li>
+			<li><a href="#">Acerca</a></li>
+			<li><a href="#">Contacto</a></li>
+		</ul>-->
+		<div class="footer-copyright">
+			<p>APP | <i class="fa-solid fa-copyright"></i>
+				<script>
+					document.write(new Date().getFullYear())
+				</script>
+			</p>
+		</div>
+	</footer>
+	<script type="text/javascript" th:src="@{/js/login/login.js}"></script>
+	<script type="text/javascript" th:src="@{/js/alert/sweetalert2.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/alert/alert.js}"></script>
+	<script th:inline="javascript">
+		var Toast_message_warning = /*[[${warningToast}]]*/'default';
+		if (Toast_message_warning != null) {
+			warningToast(Toast_message_warning);
+		}
+
+		var Toast_message_info = /*[[${infoToast}]]*/'default';
+		if (Toast_message_info != null) {
+			infoToast(Toast_message_info);
+		}
+
+		var Toast_message_error = /*[[${errorToast}]]*/'default';
+		if (Toast_message_error != null) {
+			errorToast(Toast_message_error);
+		}
+
+		var Toast_message_success = /*[[${successToast}]]*/'default';
+		if (Toast_message_success != null) {
+			successToast(Toast_message_success);
+		}
+	</script>
+</body>
+
+</html>
