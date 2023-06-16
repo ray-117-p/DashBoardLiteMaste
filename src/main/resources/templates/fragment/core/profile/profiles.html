@@ -1,0 +1,52 @@
+<div th:replace="layout/layout :: defaultPreload"></div>
+<div th:replace="layout/layout :: preload"></div>
+
+<div class="row">
+	<div class="col-md-12 col-sm-12 ">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title">Perfiles de usuario</h4>
+
+				<div class="row">
+					<div class="col-sm-12" align="right"><a th:href="@{createProfile}"
+							class="btn btn-round btn-sm btn-success"><i class="fa-regular fa-address-card"></i> Crear
+							perfil</a></div>
+				</div>
+				<div class="table-responsive mt-5">
+					<table class="table table-hover" id="tableDatos">
+						<thead>
+							<tr class="headerTableI" align="center">
+								<th>Perfil</th>
+								<th>Estatus</th>
+								<th>Editar</th>
+								<th>Menú</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="perfilUsu : ${lstPerfilUsuario}" class="txt_n">
+								<td th:text="${perfilUsu.descripcion}"></td>
+								<td th:if="${perfilUsu.estatus == true}" style="color: #28a745;"><span
+										class="fa fa-thumbs-up">
+									</span> <span> Activo</span></td>
+								<td th:if="${perfilUsu.estatus == false}" style="color: #dc3545;"><span
+										class="fa fa-thumbs-down"> </span><span> Inactivo</span></td>
+								<td>
+									<a th:href="@{/editProfile}+'/'+${perfilUsu.idPerfil}"
+										style="font-size: 15px;"><b><i class="fa fa-edit"></i></b></a>
+								</td>
+								<td>
+									<form th:action="@{/administrarMenu}" method="post">
+										<button type="submit" class="btn" style="font-size: 15px;">
+											<b><i class="fas fa-bars"></i></b>
+										</button>
+										<input type="hidden" th:value="${perfilUsu.idPerfil}" name="idPerfil" />
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

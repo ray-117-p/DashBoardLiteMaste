@@ -1,0 +1,22 @@
+<div th:fragment="showTablePermisos">
+	<table class="table table-hover" id="tableDatos">
+		<thead>
+			<tr class="headerTableI" align="center">
+				<th>#</th>
+				<th>Permiso</th>
+				<th>Schema</th>
+				<th>Activo</th>
+			</tr>
+		</thead>
+		<tbody th:if="${lstCatPermiso != null}">
+			<tr th:each="permisos, row : ${lstCatPermiso}" align="center">
+				<td class="txt_n" th:text="${permisos.idPermiso}"></td>
+				<td class="txt_n" th:text="${permisos.permiso}"></td>
+				<td class="txt_n" th:text="${permisos.catSchema.nombre}"></td>
+				<td><input type="checkbox" th:value="${permisos.idPermiso}"
+						th:field="*{perfilAddPermisos.perfilPermisos[__${row.index}__].catPermiso.idPermiso}">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

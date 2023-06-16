@@ -1,0 +1,88 @@
+<div th:replace="layout/layout :: defaultPreload"></div>
+<div th:replace="layout/layout :: preload"></div>
+
+<div class="row">
+	<div class="col-md-12 col-sm-12 ">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title">Cátalogo permisos</h4>
+				<div class="row">
+					<div class="col-md-6" align="left">
+						<button type="button" id="addPermiso" class="btn btn-round btn-info" onclick="addPermiso()">
+							<i class="fas fa-address-card"></i> Agregar Permiso
+						</button>
+					</div>
+					<div class="col-md-6" align="right">
+						<!-- VACIO -->
+					</div>
+				</div>
+				<div class="table-responsive mt-5">
+					<table class="table table-hover" id="tableCatPermisos">
+						<thead>
+							<tr class="headerTableI" align="center">
+								<th>Permiso</th>
+								<th>Esquema</th>
+								<th>Editar</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr class="headerTableI" align="center">
+								<th>Permiso</th>
+								<th>Esquema</th>
+								<th>Editar</th>
+							</tr>
+						</tfoot>
+					</table>
+					<input type="hidden" id="url">
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal nuevo registro-->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">
+					<i class="fas fa-tasks"></i> Agregar registro al catalogo.
+				</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form id="formAddPermiso">
+					<input type="hidden" id="idCatPermisos" name="idCatPermisos">
+					<label class="txt_n">Schema</label> <select class="form-control" id="schema" name="schema" required>
+						<option value="0">Seleccione...</option>
+						<option th:each="sc : ${lstCatSchema}" th:value="${sc.idSchema}" th:text="${sc.descripcion}">
+						</option>
+					</select>
+					<div class="mt-3"></div>
+					<label class="txt_n">Permiso</label>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon1">ROLE_SCHEMA_</span>
+						</div>
+						<input type="text" class="form-control" placeholder="CAPTURA_EJEMPLO" name="permiso"
+							id="permiso" onkeyup="text_cat(this)" aria-label="Username" aria-describedby="basic-addon1"
+							required>
+					</div>
+
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+					<span class="fa fa-times"> </span> Cancelar
+				</button>
+				<button type="button" class="btn btn-success" id="btnSavePermiso">
+					<span class="fa fa-save"> </span> Guardar
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script th:inline="javascript">
+	document.getElementById("url").value = /*[[@{/}]]*/'default';
+</script>
+<script type="text/javascript" th:src="@{/js/user/cat_permisos.js}"></script>

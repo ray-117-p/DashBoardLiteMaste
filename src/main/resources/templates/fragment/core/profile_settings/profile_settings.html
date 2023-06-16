@@ -1,0 +1,63 @@
+<div th:replace="layout/layout :: defaultPreload"></div>
+<div th:replace="layout/layout :: preload"></div>
+
+<div class="row">
+	<div class="col-md-12 col-sm-12 ">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title">Perfil de usuario</h4>
+				<div class="col-md-3 col-sm-3  profile_left">
+					<div class="profile_img">
+						<div id="crop-avatar">
+							<!-- Current avatar -->
+							<img class="img-responsive avatar-view" th:src="@{/img/user.png}" alt="Avatar"
+								title="Change the avatar">
+						</div>
+					</div>
+					<h5 th:text="${user.nombre}+' '+${user.paterno}+' '+${user.materno}">error</h5>
+					<ul class="list-unstyled user_data">
+
+						<li>
+							<i class="fa-solid fa-user-shield"></i> <label th:text="${user.perfil.descripcion}"></label>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-9 col-sm-9 ">
+					<div class="profile_title">
+						<div class="" role="tabpanel" data-example-id="togglable-tabs">
+							<ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+								<li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab"
+										data-toggle="tab" aria-expanded="true">Cambiar
+										Contraseña</a>
+								</li>
+							</ul>
+							<div id="myTabContent" class="tab-content">
+								<div role="tabpanel" class="tab-pane active " id="tab_content1"
+									aria-labelledby="profile-tab">
+									<form th:action="@{/saveChangePassword}" method="post">
+										<input type="hidden" th:value="${user.uuid}" name="uuid"
+											id="uuid" />
+										<div class="mt-4"></div>
+										<label class="txt_n">Nueva Contraseña</label><input type="text"
+											class="form-control" required="required" name="nuevaPassword"
+											id="nuevaPassword" onblur="validarInput(this)">
+										<div class="mt-4"></div>
+										<label class="txt_n">Confirmar Nueva Contraseña</label><input type="text"
+											class="form-control" required="required" name="confirmacionPassword"
+											id="confirmacionPassword" onblur="validarInput(this)">
+										<div class="mt-4"></div>
+										<button type="submit" id="saveUsuario" class="btn btn-success">
+											<span class="fa fa-save"> </span> Guardar
+										</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" th:src="@{/js/validador/validarInputs.js}"></script>

@@ -1,0 +1,291 @@
+<div th:fragment="showMenu">
+
+	<div class="sidebar-menu">
+		<div th:if="${#lists.isEmpty(lstPerfilMenuDinamic)}">
+			<div class="alert alert-danger mt-4 txt_n" role="alert">
+				<i class="fas fa-exclamation-triangle"></i> Perfil Sin Menú!
+				<br><br> Se tiene que crear un menú al perfil. <i class="fas fa-edit"></i>
+			</div>
+		</div>
+		<ul th:each="encabezado , itr : ${lstPerfilMenuDinamic}">
+			<li class="segmentos"><span th:text="${encabezado.menu.descripcion}+' (segmento)'"></span> <a
+					class="opcionMenu" th:id="'Segmento_'+${encabezado.menu.idMenu}" href="#" data-bs-toggle="modal"
+					data-tipo="segmento" th:data-id="${encabezado.menu.idMenu}"
+					th:data-value="${encabezado.menu.descripcion}" th:data-idmenuperfil="${encabezado.idPerfilMenu}"
+					th:data-orden="${encabezado.orden}" data-bs-target="#ModalEditSegmento"
+					onclick="datoSegmento(this)">Editar</a>
+				<a class="opcionMenu" th:id="${encabezado.menu.idMenu}" href="#"
+					onclick="questionSwalSegmento('¿Eliminar segmento?',this)">Eliminar</a>
+				<a class="opcionMenu" th:id="'addItem_'+${encabezado.menu.idMenu}" href="#" data-bs-toggle="modal"
+					data-bs-target="#ModalNuevo" th:data-id="${encabezado.menu.idMenu}"
+					onclick="datoNuevo(this)">Agregar</a>
+			</li>
+
+
+			<div th:each="item, irt2 : ${encabezado.menu.menuVistas}">
+
+				<li th:if="${item.vista.tipo == 'I'}" class="menuLink"><a th:href="@{${item.vista.url}}" class="prelo">
+						<i th:class="${item.vista.icono}"></i> <span th:text="${item.vista.descripcion}"> </span>
+					</a> | <a class="opcionMenu" th:id="'itemLink_'+${item.vista.idVistas}" data-bs-toggle="modal"
+						data-bs-target="#ModalEdit" th:data-id="${item.vista.idVistas}"
+						th:data-descripcion="${item.vista.descripcion}" th:data-url="${item.vista.url}"
+						th:data-tipo="${item.vista.tipo}" th:data-icono="${item.vista.icono}"
+						th:data-orden="${item.orden}" th:data-vistamenu="${item.idMenuVistas}" onclick="dato(this)"
+						href="#">Editar</a> <a class="opcionMenu" th:id="${item.vista.idVistas}" href="#"
+						onclick="questionSwalItem('¿Eliminar parte del menú?',this)">Eliminar</a></li>
+
+				<!-- Menu -->
+				<li class="sidebar-dropdown menuLink" th:if="${item.vista.tipo == 'S'}"><a href="#"> <i
+							th:class="${item.vista.icono}"></i> <span th:text="${item.vista.descripcion}"> </span>
+					</a> | <a class="opcionMenu" th:id="'itemLink_'+${item.vista.idVistas}" data-bs-toggle="modal"
+						data-bs-target="#ModalEdit" th:data-id="${item.vista.idVistas}"
+						th:data-descripcion="${item.vista.descripcion}" th:data-url="${item.vista.url}"
+						th:data-tipo="${item.vista.tipo}" th:data-icono="${item.vista.icono}"
+						th:data-orden="${item.orden}" th:data-vistamenu="${item.idMenuVistas}" onclick="dato(this)"
+						href="#">Editar</a> <a class="opcionMenu" th:id="${item.vista.idVistas}" href="#"
+						onclick="questionSwalItem('¿Eliminar parte del menú?',this)">Eliminar</a>
+					<a class="opcionMenu" href="#" data-bs-toggle="modal" th:id="'sub_'+${item.vista.idVistas}"
+						data-bs-target="#ModalNuevoSub" th:data-id="${item.vista.idVistas}"
+						onclick="datoNuevoSub(this)">Agregar
+						sub menú</a>
+
+					<div class="sidebar-submenu">
+						<ul th:each="itemSub, irtSub : ${item.vista.vistas}">
+							<li><a th:href="@{${itemSub.url}}"><span th:text="${itemSub.descripcion}"></span> </a> | <a
+									class="opcionMenu" th:id="'itemSubLink_'+${itemSub.idVistas}" data-bs-toggle="modal"
+									data-bs-target="#ModalEditSub" th:data-id="${itemSub.idVistas}"
+									th:data-descripcion="${itemSub.descripcion}" th:data-url="${itemSub.url}"
+									th:data-icono="${itemSub.icono}" th:data-vista="${item.vista.idVistas}"
+									onclick="datoEditSub(this)" href="#">Editar</a> <a class="opcionMenu"
+									th:id="${itemSub.idVistas}" href="#"
+									onclick="questionSwalItemSub('¿Eliminar parte del sub menú?',this)">Eliminar</a>
+							</li>
+						</ul>
+					</div>
+				</li>
+			</div>
+		</ul>
+	</div>
+
+	<!-- Modal Segmento-->
+	<div class="modal fade" id="ModalEditSegmento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<form method="post" id="formEditSegmento">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">
+							<i class="fas fa-bars"></i> Editar menú (Segmento)
+						</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" name="idSegmento" id="idSegmento" value="" />
+						<!--  -->
+						<input type="hidden" name="idPerfilMenu" id="idPerfilMenu" value="" />
+						<!--  -->
+						<label class="txt_n">Nombre</label> <input type="text" name="editSegmento" id="editSegmento"
+							required="required" class="form-control" placeholder="Segmento">
+						<div class="mt-3"></div>
+						<label class="txt_n">Orden</label> <input type="number" name="ordenSegmento" id="ordenSegmento"
+							required="required" class="form-control">
+
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+							<span class="fa fa-times"> </span> Cancelar
+						</button>
+						<button type="button" class="btn btn-info" onclick="saveEditSegmento()">
+							<span class="fa fa-save"> </span> Guardar
+						</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<form method="post" id="formEdit">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">
+							<i class="fas fa-bars"></i> Editar menú
+						</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" name="idEdit" id="idEdit" value="" /> <input type="hidden"
+							name="idMenuVistasEdit" id="idMenuVistasEdit" value="" />
+						<!--  -->
+						<label class="txt_n">Tipo</label> <select id="tipoEdit" name="tipoEdit" class="form-control"
+							required="required">
+							<option value="I">Item</option>
+							<option value="S">Sub menú</option>
+						</select>
+						<div class="mt-3"></div>
+						<label class="txt_n">Descripción</label> <input type="text" name="edit" id="edit"
+							required="required" class="form-control" placeholder="Segmento">
+						<div class="mt-3"></div>
+						<label class="txt_n">Icono</label> <input type="text" name="editIcono" id="editIcono"
+							required="required" class="form-control" placeholder="fa fa-home">
+						<div class="mt-3"></div>
+						<label class="txt_n">Url</label> <input type="text" name="editUrl" id="editUrl"
+							class="form-control" placeholder="/home">
+						<div class="mt-3"></div>
+						<label class="txt_n">Orden</label> <input type="number" name="editOrden" id="editOrden"
+							required="required" class="form-control">
+
+
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+							<span class="fa fa-times"> </span> Cancelar
+						</button>
+						<button type="button" class="btn btn-info" onclick="saveEdit()">
+							<span class="fa fa-save"> </span> Guardar
+						</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!-- Modal nuevo Item-->
+	<div class="modal fade" id="ModalNuevo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<form method="post" id="formNuevo">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">
+							<i class="fas fa-bars"></i> Nuevo menú
+						</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" name="idMenuNuevo" id="idMenuNuevo" value="" />
+						<!--  -->
+						<label class="txt_n">Tipo</label> <select id="tipoNuevo" name="tipoNuevo" class="form-control"
+							required="required">
+							<option value="I">Item</option>
+							<option value="S">Sub menú</option>
+						</select>
+						<div class="mt-3"></div>
+						<label class="txt_n">Descripción</label> <input type="text" name="nuevo" id="nuevo"
+							required="required" class="form-control" placeholder="Item">
+						<div class="mt-3"></div>
+						<label class="txt_n">Icono</label> <input type="text" name="nuevoIcono" id="nuevoIcono"
+							required="required" class="form-control" placeholder="fa fa-home">
+						<div class="mt-3"></div>
+						<label class="txt_n">Url</label> <input type="text" name="nuevoUrl" id="nuevoUrl"
+							class="form-control" placeholder="/home">
+						<div class="mt-3"></div>
+						<label class="txt_n">Orden</label> <input type="number" name="nuevoOrden" id="nuevoOrden"
+							required="required" class="form-control">
+
+
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+							<span class="fa fa-times"> </span> Cancelar
+						</button>
+						<button type="button" class="btn btn-info" onclick="saveNuevo()">
+							<span class="fa fa-save"> </span> Guardar
+						</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- Modal nuevo Sub Item-->
+	<div class="modal fade" id="ModalNuevoSub" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<form method="post" id="formNuevoSub">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">
+							<i class="fas fa-bars"></i> Agregar sub menú
+						</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" name="idMenuNuevoSub" id="idMenuNuevoSub" value="" />
+						<!--  -->
+
+						<label class="txt_n">Descripción</label> <input type="text" name="nuevoSub" id="nuevoSub"
+							required="required" class="form-control" placeholder="Sub menu">
+						<div class="mt-3"></div>
+						<label class="txt_n">Icono</label> <input type="text" name="nuevoSubIcono" id="nuevoSubIcono"
+							required="required" class="form-control" placeholder="fa fa-home">
+						<div class="mt-3"></div>
+						<label class="txt_n">Url</label> <input type="text" required="required" name="nuevoSubUrl"
+							id="nuevoSubUrl" class="form-control" placeholder="/home">
+						<div class="mt-3"></div>
+
+
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+							<span class="fa fa-times"> </span> Cancelar
+						</button>
+						<button type="button" class="btn btn-info" onclick="saveNuevoSub()">
+							<span class="fa fa-save"> </span> Guardar
+						</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!-- Modal Edit Item Sub-->
+	<div class="modal fade" id="ModalEditSub" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<form method="post" id="formEditSub">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">
+							<i class="fas fa-bars"></i> Editar sub menú
+						</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" name="idEditSub" id="idEditSub" value="" />
+						<input type="hidden" name="idVistasEdit" id="idVistasEdit" value="" />
+						<!--  -->
+
+						<label class="txt_n">Descripción</label> <input type="text" name="editSub" id="editSub"
+							required="required" class="form-control" placeholder="Sub menu">
+						<div class="mt-3"></div>
+						<label class="txt_n">Icono</label> <input type="text" name="editSubIcono" id="editSubIcono"
+							required="required" class="form-control" placeholder="fa fa-home">
+						<div class="mt-3"></div>
+						<label class="txt_n">Url</label> <input type="text" name="editSubUrl" id="editSubUrl"
+							class="form-control" placeholder="/home">
+						<div class="mt-3"></div>
+
+
+
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+							<span class="fa fa-times"> </span> Cancelar
+						</button>
+						<button type="button" class="btn btn-info" onclick="saveSubEdit()">
+							<span class="fa fa-save"> </span> Guardar
+						</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

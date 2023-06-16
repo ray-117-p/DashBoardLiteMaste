@@ -1,0 +1,206 @@
+<div th:replace="layout/layout :: defaultPreload"></div>
+<div th:replace="layout/layout :: preload"></div>
+
+<div th:if="${status == 1}">
+	<div class="row">
+		<div class="col-md-12 col-sm-12 ">
+			<div class="card">
+				<div class="card-body">
+					<h4 class="card-title">Nuevo Perfil Usuario</h4>
+					<form th:action="@{/saveNuevoPerfil}" method="post">
+						<div class="row mt-3">
+							<div class="col-md-2">
+								<!-- VACIO -->
+							</div>
+							<div class="col-md-4">
+								<label class="txt_n"><span class="required">*</span>
+									Nombre Perfil</label> <input type="text" class="form-control" required="required"
+									onblur="validarInput(this)" placeholder="Nuevo perfil..."
+									th:value="${nuevoPerfil.descripcion}" th:field="*{nuevoPerfil.descripcion}" />
+							</div>
+							<div class="col-md-4">
+								<label class="txt_n"><span class="required">*</span> URL
+									(index)</label> <input type="text" class="form-control" required="required"
+									onblur="validarInput(this)" id="url" placeholder="ejemplo: /index"
+									th:value="${nuevoPerfil.index}" th:field="*{nuevoPerfil.index}" />
+							</div>
+							<div class="col-md-2">
+								<!-- VACIO -->
+							</div>
+
+						</div>
+						<div class="row mt-3">
+							<div class="col-md-2">
+								<!-- VACIO -->
+							</div>
+							<div class="col-md-4">
+								<label class="txt_n">Tipo Perfil</label> <select required="required"
+									class="form-control TipoPerfil" id="catArea" name="catArea"
+									th:field="*{nuevoPerfil.catTipoPerfil.idTipoPerfil}">
+									<option value="0">Seleccione...</option>
+									<option th:each="ct : ${lstCatTipoPerfil}" th:value="${ct.idTipoPerfil}"
+										th:text="${ct.descripcion}">
+									</option>
+								</select>
+							</div>
+							<div class="col-md-4">
+							</div>
+							<div class="col-md-2">
+								<!-- VACIO -->
+							</div>
+
+						</div>
+						<div class="row mt-4">
+							<div class="col-md-2">
+								<!-- VACIO -->
+							</div>
+							<div class="col-md-8" align="center">
+								<div class="table-responsive">
+									<div id="framentPermisos"></div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<!-- VACIO -->
+							</div>
+						</div>
+						<div class="row mt-4">
+							<div class="col-md-6" align="center">
+								<a id="botonGuardar" class="prelo btn btn-danger" th:href="@{/profiles}"> <span
+										class="fa fa-times">
+									</span> Cancelar
+								</a>
+							</div>
+							<div class="col-md-6" align="center">
+								<button type="submit" id="savePerfil" class="btn btn-success">
+									<span class="fa fa-user-plus"> </span> Crear Perfil
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" th:src="@{/js/profile/profile.js}"></script>
+</div>
+
+<div th:if="${status == 0}">
+	<div class="row">
+		<div class="col-md-12 col-sm-12 ">
+			<div class="card">
+				<div class="card-body">
+					<h4 class="card-title">Actualizar Perfil Usuario</h4>
+					<form th:action="@{/saveEditarPerfil}" method="post">
+						<div class="row mt-3">
+							<div class="col-md-2">
+								<input type="hidden" th:field="*{nuevoPerfil.idPerfil}">
+							</div>
+							<div class="col-md-4">
+								<label class="txt_n">Nombre Perfil</label> <input type="text" class="form-control"
+									placeholder="Ingrese nombre del nuevo perfil..."
+									th:value="${nuevoPerfil.descripcion}" th:field="*{nuevoPerfil.descripcion}" />
+							</div>
+							<div class="col-md-4">
+								<label class="txt_n">URL</label> <input type="text" class="form-control"
+									required="required" id="urlNew" placeholder="ejemplo: /index"
+									th:value="${nuevoPerfil.index}" th:field="*{nuevoPerfil.index}" />
+							</div>
+							<div class="col-md-2">
+								<!-- VACIO -->
+							</div>
+
+						</div>
+						<div class="row mt-3">
+							<div class="col-md-2">
+								<!-- VACIO -->
+							</div>
+							<div class="col-md-4">
+								<label class="txt_n">Tipo Perfil</label> <select required="required"
+									class="form-control" disabled th:field="*{nuevoPerfil.catTipoPerfil.idTipoPerfil}">
+									<option value="0">Seleccione...</option>
+									<option th:each="ct : ${lstCatTipoPerfil}" th:value="${ct.idTipoPerfil}"
+										th:text="${ct.descripcion}"></option>
+								</select>
+								<input type="hidden" id="catArea" name="catArea"
+									th:field="*{nuevoPerfil.catTipoPerfil.idTipoPerfil}">
+							</div>
+							<div class="col-md-4">
+
+							</div>
+							<div class="col-md-2">
+								<!-- VACIO -->
+							</div>
+
+						</div>
+						<div class="row mt-3">
+							<div class="col-md-2">
+								<!-- VACIO -->
+							</div>
+							<div class="col-md-4">
+								<label class="txt_n">Estatus</label><select id="estatus" name="estatus"
+									class="form-control" required="required" th:value="${nuevoPerfil.estatus}"
+									th:field="*{nuevoPerfil.estatus}">
+									<option value="0">BAJA</option>
+									<option value="1">ACTIVO</option>
+								</select>
+							</div>
+						</div>
+						<div class="row mt-4">
+							<div class="col-md-2">
+								<!-- VACIO -->
+							</div>
+							<div class="col-md-8" align="center">
+								<div class="table-responsive">
+									<table class="table table-hover" id="tableDatos">
+										<thead>
+											<tr class="headerTableI" align="center">
+												<th>#</th>
+												<th>Permiso</th>
+												<th>Schema</th>
+												<th>Activo</th>
+											</tr>
+										</thead>
+										<tbody th:if="${nuevoPerfil.perfilPermisos != null}">
+											<tr th:each="permisos, row : *{nuevoPerfil.perfilPermisos}" align="center">
+												<td class="txt_n" th:text="${permisos.catPermiso.idPermiso}"></td>
+												<td class="txt_n" th:text="${permisos.catPermiso.permiso}"></td>
+												<td class="txt_n" th:text="${permisos.catPermiso.catSchema.nombre}">
+												</td>
+												<td><input type="checkbox" th:value="${permisos.catPermiso.idPermiso}"
+														th:field="*{nuevoPerfil.perfilPermisos[__${row.index}__].activo}"
+														th:checked="${permisos.activo}"> <input type="hidden"
+														th:field="*{nuevoPerfil.perfilPermisos[__${row.index}__].idPerfilPermiso}">
+													<input type="hidden"
+														th:field="*{nuevoPerfil.perfilPermisos[__${row.index}__].catPermiso.idPermiso}">
+													<input type="hidden"
+														th:field="*{nuevoPerfil.perfilPermisos[__${row.index}__].perfil.idPerfil}">
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<!-- VACIO -->
+							</div>
+						</div>
+						<div class="row mt-4">
+							<div class="col-md-6" align="center">
+								<a id="botonGuardar" class="prelo btn btn-danger" th:href="@{/profiles}"> <span
+										class="fa fa-times">
+									</span> Cancelar
+								</a>
+							</div>
+							<div class="col-md-6" align="center">
+								<button type="submit" id="savePerfil" class="btn btn-info">
+									<span class="fa fa-save"> </span> Guardar Perfil
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" th:src="@{/js/validador/validarInputs.js}"></script>

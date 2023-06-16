@@ -1,0 +1,206 @@
+<div th:replace="layout/layout :: defaultPreload"></div>
+<div th:replace="layout/layout :: preload"></div>
+
+<div class="alert alert-success" role="alert" th:if="${status == 1}">
+	<h4 class="alert-heading">Configuración se ha guardado con éxito</h4>
+	<p>Se necesita, finalizar sesión para aplicar los cambios
+		correctamente a la interfaz.</p>
+</div>
+<div class="row">
+	<div class="col-md-12 col-sm-12 ">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title">Configuración Interfaz (Fase de pruebas......)</h4>
+				<form th:action="@{/saveConfiguracionInterfaz}" method="post" id="formConfigInterfaz">
+					<div class="row mt-4">
+						<div class="col-md-11">
+							<div class="row mt-4" align="right">
+								<div class="col-md-12">
+									<button type="button" class="btn btn-info" onclick="previewInterfaz()">
+										<i class="fas fa-eye"></i> Preview
+									</button>
+									<button type="button" class="btn btn-success"
+										onclick="questionSwalConfigInterfaz('¿Guardar Configuración?')">
+										<i class="fas fa-sync"></i> Guardar Configuración
+									</button>
+								</div>
+							</div>
+							<h4 class="txt_n">Barra superior</h4>
+							<div class="row mt-1">
+								<div class="col-sm-4">
+									<label class="txt_n">COLOR DE FONDO BARRA SUPERIOR</label>
+									<div class="input-group mb-3">
+										<input type="text" class="form-control" placeholder="#9b2121" data-jscolor="{}"
+											id="nav_top_background"
+											th:field="*{lstConfig.configuracionInterfaz[0].color}"
+											aria-describedby="nav_top_background">
+									</div>
+									<input type="hidden"
+										th:field="*{lstConfig.configuracionInterfaz[0].idConfiguracion}">
+									<input type="hidden" th:field="*{lstConfig.configuracionInterfaz[0].descripcion}"
+										id="NAV_TOP">
+								</div>
+								<div class="col-sm-4">
+									<label class="txt_n">COLOR TEXTO BARRA SUPERIOR</label>
+									<div class="input-group mb-3">
+										<input type="text" class="form-control" placeholder="#9b2121" data-jscolor="{}"
+											id="nav_top_font" th:field="*{lstConfig.configuracionInterfaz[1].color}"
+											aria-describedby="nav_top_font">
+									</div>
+									<input type="hidden"
+										th:field="*{lstConfig.configuracionInterfaz[1].idConfiguracion}">
+									<input type="hidden" th:field="*{lstConfig.configuracionInterfaz[1].descripcion}"
+										id="NAV_TOP_TEXT">
+								</div>
+
+								<div class="col-sm-4">
+									<label class="txt_n">Nombre del sistema</label>
+									<div class="input-group mb-3">
+										<input type="text" class="form-control" id="nombreSystem" name="nombreSystem"
+											th:value="${NombreSchema}">
+									</div>
+								</div>
+							</div>
+							<h4 class="txt_n">Menu (Izquierda)</h4>
+							<div class="row mt-3">
+								<div class="col-sm-4">
+									<label class="txt_n">COLOR DE FONDO MENU</label>
+									<div class="input-group mb-3">
+										<input type="text" class="form-control" placeholder="#9b2121" data-jscolor="{}"
+											id="nav_left_background"
+											th:field="*{lstConfig.configuracionInterfaz[2].color}"
+											aria-describedby="nav_left_background">
+									</div>
+									<input type="hidden"
+										th:field="*{lstConfig.configuracionInterfaz[2].idConfiguracion}">
+									<input type="hidden" th:field="*{lstConfig.configuracionInterfaz[2].descripcion}"
+										id="NAV_IZQ">
+								</div>
+								<div class="col-sm-4">
+									<label class="txt_n">LINEAS CUADRO DE USUARIO</label>
+									<div class="input-group mb-3">
+										<div class="input-group-prepend">
+											<div class="input-group-text">
+												<input type="checkbox" onclick="validar_check()"
+													th:field="*{lstConfig.configuracionInterfaz[3].activo}"
+													id="colorLineaUsuario">
+											</div>
+										</div>
+										<input type="text" class="form-control" disabled="disabled"
+											th:field="*{lstConfig.configuracionInterfaz[3].color}" data-jscolor="{}"
+											id="lineas_usuario">
+									</div>
+									<input type="hidden"
+										th:field="*{lstConfig.configuracionInterfaz[3].idConfiguracion}">
+									<input type="hidden" th:field="*{lstConfig.configuracionInterfaz[3].descripcion}"
+										id="NAV_USER">
+								</div>
+								<div class="col-sm-4">
+									<label class="txt_n">COLOR TEXTO MENU/USUARIO</label>
+									<div class="input-group mb-3">
+										<input type="text" class="form-control" placeholder="#9b2121" data-jscolor="{}"
+											id="nav_left_font_items"
+											th:field="*{lstConfig.configuracionInterfaz[4].color}"
+											aria-describedby="nav_left_font_items">
+									</div>
+									<input type="hidden"
+										th:field="*{lstConfig.configuracionInterfaz[4].idConfiguracion}">
+									<input type="hidden" th:field="*{lstConfig.configuracionInterfaz[4].descripcion}"
+										id="NAV_ITEM">
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-sm-4">
+									<label class="txt_n">COLOR TEXTO SEGMENTOS MENU</label>
+									<div class="input-group mb-3">
+										<input type="text" class="form-control" placeholder="#9b2121" data-jscolor="{}"
+											id="nav_left_font_segmentos"
+											th:field="*{lstConfig.configuracionInterfaz[5].color}"
+											aria-describedby="nav_left_font_segmentos">
+									</div>
+									<input type="hidden"
+										th:field="*{lstConfig.configuracionInterfaz[5].idConfiguracion}">
+									<input type="hidden" th:field="*{lstConfig.configuracionInterfaz[5].descripcion}"
+										id="NAV_SEGMENTOS">
+								</div>
+								<div class="col-sm-4">
+									<label class="txt_n">COLOR DE FONDO DEL ICONO MENU</label>
+									<div class="input-group mb-3">
+										<input type="text" class="form-control" placeholder="#9b2121" data-jscolor="{}"
+											id="nav_left_cuadro_icono_menu"
+											th:field="*{lstConfig.configuracionInterfaz[6].color}"
+											aria-describedby="nav_left_cuadro_icono_menu">
+									</div>
+									<input type="hidden"
+										th:field="*{lstConfig.configuracionInterfaz[6].idConfiguracion}">
+									<input type="hidden" th:field="*{lstConfig.configuracionInterfaz[6].descripcion}"
+										id="NAV_CUADRO_MENU_ICONO">
+								</div>
+								<div class="col-sm-4">
+									<label class="txt_n">COLOR ICONO DEL MENU</label>
+									<div class="input-group mb-3">
+										<input type="text" class="form-control" placeholder="#9b2121" data-jscolor="{}"
+											id="nav_left_font_icono_menu"
+											th:field="*{lstConfig.configuracionInterfaz[7].color}"
+											aria-describedby="nav_left_font_icono_menu">
+									</div>
+									<input type="hidden"
+										th:field="*{lstConfig.configuracionInterfaz[7].idConfiguracion}">
+									<input type="hidden" th:field="*{lstConfig.configuracionInterfaz[7].descripcion}"
+										id="NAV_ICONO">
+								</div>
+							</div>
+							<h4 class="txt_n">Interfaz del Login</h4>
+							<div class="row mt-3">
+								<div class="col-sm-4">
+									<label class="txt_n">COLOR PRINCIPAL</label>
+									<div class="input-group mb-3">
+										<input type="text" class="form-control" placeholder="#9b2121" data-jscolor="{}"
+											id="colorPrincipal" th:field="*{lstConfig.configuracionInterfaz[8].color}"
+											aria-describedby="colorPrincipal">
+									</div>
+									<input type="hidden"
+										th:field="*{lstConfig.configuracionInterfaz[8].idConfiguracion}">
+									<input type="hidden" th:field="*{lstConfig.configuracionInterfaz[8].descripcion}"
+										id="colorPrincipalLogin">
+								</div>
+								<div class="col-sm-4">
+									<label class="txt_n">COLOR SECUNDARIO</label>
+									<div class="input-group mb-3">
+										<input type="text" class="form-control" placeholder="#9b2121" data-jscolor="{}"
+											id="colorSecundario" th:field="*{lstConfig.configuracionInterfaz[9].color}"
+											aria-describedby="colorSecundario">
+									</div>
+									<input type="hidden"
+										th:field="*{lstConfig.configuracionInterfaz[9].idConfiguracion}">
+									<input type="hidden" th:field="*{lstConfig.configuracionInterfaz[9].descripcion}"
+										id="colorSecundarioLogin">
+								</div>
+								<div class="col-sm-4">
+									<label class="txt_n">COLOR TEXTO</label>
+									<div class="input-group mb-3">
+										<input type="text" class="form-control" placeholder="#9b2121" data-jscolor="{}"
+											id="colorTexto" th:field="*{lstConfig.configuracionInterfaz[10].color}"
+											aria-describedby="colorTexto">
+									</div>
+									<input type="hidden"
+										th:field="*{lstConfig.configuracionInterfaz[10].idConfiguracion}">
+									<input type="hidden" th:field="*{lstConfig.configuracionInterfaz[10].descripcion}"
+										id="colorTextoLogin">
+								</div>
+							</div>
+							<iframe height="500" class="w-100 height-600 mt-3" id="preview" name="preview"
+								th:src="@{/interfazPageLogin}"></iframe>
+						</div>
+						<div class="col-md-1">
+							<!-- VACIO -->
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" th:src="@{/js/jscolor/jscolor.js}"></script>
+<script type="text/javascript" th:src="@{/js/user/configTemplate.js}"></script>
