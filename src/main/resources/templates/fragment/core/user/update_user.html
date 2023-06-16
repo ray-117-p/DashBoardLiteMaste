@@ -1,0 +1,105 @@
+<div th:replace="layout/layout :: defaultPreload"></div>
+<div th:replace="layout/layout :: preload"></div>
+
+<div class="row">
+	<div class="col-md-12 col-sm-12 ">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="card-title">Edición de usuario</h4>
+				<form th:action="@{/saveEditUser}" method="post">
+					<input type="hidden" id="uuid" name="uuid" th:field="*{editUser.uuid}" />
+					<div class="row mt-3">
+						<div class="col-md-12" align="right">
+							<button type="button" id="updatePassword" class="btn btn-round btn-danger"
+								data-bs-toggle="modal" data-bs-target="#Modal">
+								<span class="fa fa-key"> </span> Cambiar Contraseña
+							</button>
+						</div>
+					
+					</div>
+					<div class="row mt-3">
+						<div class="col-md-4">
+							<label class="txt_n" for="nombre">Nombre</label> <input type="text" class="form-control"
+								placeholder="Ingrese nombre..." id="nombre" name="nombre" onblur="validarInput(this)"
+								th:field="*{editUser.nombre}" />
+						</div>
+						<div class="col-md-4">
+							<label class="txt_n" for="paterno">Apellido Paterno</label> <input type="text"
+								class="form-control" placeholder="Ingrese apellido paterno..." id="paterno"
+								name="paterno" onblur="validarInput(this)" th:field="*{editUser.paterno}" />
+						</div>
+						<div class="col-md-4">
+							<label class="txt_n" for="materno">Apellido Materno</label> <input type="text"
+								class="form-control" placeholder="Ingrese apellido materno..." id="materno"
+								name="materno" onblur="validarInput(this)" th:field="*{editUser.materno}" />
+						</div>
+					</div>
+					<div class="row mt-3">
+						<div class="col-md-4">
+							<label class="txt_n" for="perfil">Perfil</label><select class="form-control"
+								th:field="*{editUser.perfil.idPerfil}" id="perfil" name="perfil">
+								<option th:each="perfil: ${lstPerfilUsuario}" th:value="${perfil.idPerfil}"
+									th:text="${perfil.descripcion}">
+							</select>
+						</div>
+						<div class="col-md-4">
+							<label class="txt_n" for="user-name">User Name</label> <input type="text"
+								class="form-control" placeholder="Ingrese el user name..." id="user-name"
+								name="user-name" onblur="validarInput(this)" required="required"
+								th:field="*{editUser.username}" />
+						</div>
+						<div class="col-md-4">
+							<label class="txt_n" for="estatus">Estatus</label><select id="estatus" name="estatus"
+								class="form-control" required="required" th:field="*{editUser.estatus}">
+								<option value="0">BAJA</option>
+								<option value="1">ACTIVO</option>
+							</select>
+						</div>
+					</div>
+					<div class="row mt-4">
+						<div class="col-md-6" align="center">
+							<a class="prelo btn btn-danger" th:href="@{/users}"> <span class="fa fa-times">
+								</span> Cancelar
+							</a>
+						</div>
+						<div class="col-md-6" align="center">
+							<button type="submit" id="saveUsuario" class="btn btn-info">
+								<span class="fa fa-edit"> </span> Actualizar
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<form th:action="@{/updatePassword}" method="post">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">
+						<span class="fa fa-key"> </span> Cambio de contraseña
+					</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" th:value="${editUser.uuid}" name="uuidPassword" id="uuidPassword" /> <input
+						type="password" name="nuevaPassword" id="nuevaPassword" class="form-control">
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+						<span class="fa fa-times"> </span> Cancelar
+					</button>
+					<button type="submit" class="btn btn-info">
+						<span class="fa fa-save"> </span> Guardar
+					</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<script type="text/javascript" th:src="@{/js/validador/validarInputs.js}"></script>

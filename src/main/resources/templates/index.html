@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="es" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="layout/layout :: head">
+</head>
+
+<body>
+	<div class="preloader" th:fragment="preload">
+		<div class="lds-ripple">
+			<div class="lds-pos"></div>
+			<div class="lds-pos"></div>
+		</div>
+	</div>
+	<div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+		data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+		<!-- top navigation -->
+		<div th:replace="layout/layout :: nav_top"></div>
+		<!-- /top navigation -->
+		<!-- side navigation -->
+		<div th:replace="layout/layout :: nav_left"></div>
+		<!-- /side navigation -->
+		<div class="page-wrapper">
+			<!-- page content -->
+			<div class="container-fluid" th:if="${fragment}">
+				<div th:replace="${fragment}"></div>
+			</div>
+			<!-- /page content -->
+			<!-- footer content -->
+			<footer class="footer text-center text-muted">
+				Todos los derechos reservados <a href="https://www.per-tec.com/">Desing PER-TEC</a>.
+			</footer>
+			<!-- /footer content -->
+		</div>
+	</div>
+	<div th:replace="layout/layout :: javascript"></div>
+</body>
+
+</html>

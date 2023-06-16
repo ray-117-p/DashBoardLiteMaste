@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="apple-touch-icon" sizes="76x76" th:href="@{/img/favicon.png}">
+	<link rel="icon" type="image/png" th:href="@{/img/favicon.png}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/page-error/page-error.css}">
+	<title>SIGECO | 405</title>
+</head>
+
+<body>
+	<div class="row">
+		<div class="col-md-1">
+			<!-- VACIO -->
+		</div>
+		<div class="col-md-10" align="center">
+			<div class="card">
+				<br>
+				<div class="error">
+					<div class="container-floud">
+						<div class="col-xs-12 ground-color text-center">
+							<div class="container-error-404">
+								<div class="clip">
+									<div class="shadow"><span class="digit thirdDigit"></span></div>
+								</div>
+								<div class="clip">
+									<div class="shadow"><span class="digit secondDigit"></span></div>
+								</div>
+								<div class="clip">
+									<div class="shadow"><span class="digit firstDigit"></span></div>
+								</div>
+								<div class="msg">OH!<span class="triangle"></span></div>
+							</div>
+							<h2 class="h1">Ha ocurrido un error al procesar su solicitud</h2>
+						</div>
+					</div>
+				</div>
+				<blockquote class="blockquote">
+					<h4>
+						(POST/GET NOT SUPPORTED)
+					</h4>
+				</blockquote>
+			</div>
+		</div>
+		<div class="col-md-1">
+			<!-- VACIO -->
+		</div>
+	</div>
+	<script type="text/javascript" th:src="@{/js/page-error/405.js}"></script>
+</body>
+
+
+</html>
